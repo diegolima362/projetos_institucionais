@@ -1,0 +1,36 @@
+
+Projeto da Disciplina - Projetos Acadêmicos
+1) Especificação do projeto da disciplina de Programação Web.
+a) Construir o crud de projetos institucionais;
+● Projeto
+○ Atributos
+■ Id: Integer (Auto-increment)
+■ Título do Projeto: String(255);
+■ Professor Responsável: Professor;
+● Id: Integer (Auto-increment)
+● Matrícula: Integer;
+● Nome: String(255);
+● Curso: String(255);
+● Endereco: Endereco;
+○ Id: Integer (Auto-increment)
+○ Rua: String (255);
+○ Número: String (8);
+○ CEP: String(14);
+○ Cidade: String (50);
+○ Estado: String (50);
+○ País: String (50);
+■ Área do Projeto: String (255);
+■ Resumo: String (3000);
+■ Palavra-chave 1: String (50);
+■ Palavra-chave 2: String (50);
+■ Palavra-chave 3: String (50);
+■ Url_documento: String (255);
+● Aluno
+○ Id: Integer (Auto-increment)
+○ Matrícula: Integer;
+○ Nome completo: String (255);
+○ CPF: String (13);
+○ Endereço: Endereco;
+○ Curso: String (255);
+b) Cadastrar projetos, professores e alunos. Observe o modelo do Professor e Aluno (Aluno.java) na construção da view.
+c) Vincular um aluno a um projeto (assim como é feito com professor). d) Vincular mais de um aluno ao projeto. Esta tarefa consiste em associar alunos aos projetos. Implemente da maneira que achar mais conveniente;
