@@ -30,11 +30,11 @@ public class AlunosController {
     }
 
     @GetMapping("/matricula/{matricula}")
-    public ResponseEntity<List<AlunoDTO>> getCarrosByTipo(@PathVariable("matricula") String matricula) {
-        List<AlunoDTO> listaAlunos = service.getAlunoByMatricula(matricula);
-        return listaAlunos.isEmpty() ?
+    public ResponseEntity<List<AlunoDTO>> getAlunoByMatricula(@PathVariable("matricula") String matricula) {
+        List<AlunoDTO> listaAluno = service.getAlunoByMatricula(matricula);
+        return listaAluno.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(listaAlunos);
+                ResponseEntity.ok(listaAluno);
     }
 
     @PostMapping
@@ -54,5 +54,4 @@ public class AlunosController {
         service.remover(id);
         return "Aluno removido com sucesso. ";
     }
-
 }

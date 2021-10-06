@@ -43,6 +43,7 @@ public class ProfessorService {
             professorDB.setCurso(professor.getCurso());
             professorDB.setEndereco(professor.getEndereco());
 
+
             professorRepository.save(professorDB);
             return professorDB;
         } else {

@@ -24,17 +24,17 @@ public class ProfessoresController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Professor> get(@PathVariable("id") Long id) {
-        Optional<Professor> profe = service.getProfessorById(id);
-        return profe.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        Optional<Professor> professor = service.getProfessorById(id);
+        return professor.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 
     }
 
     @GetMapping("/matricula/{matricula}")
-    public ResponseEntity<List<ProfessorDTO>> getCarrosByTipo(@PathVariable("matricula") String matricula) {
-        List<ProfessorDTO> listaProfessores = service.getProfessorByMatricula(matricula);
-        return listaProfessores.isEmpty() ?
+    public ResponseEntity<List<ProfessorDTO>> getProfessorByMatricula(@PathVariable("matricula") String matricula) {
+        List<ProfessorDTO> listaProfessor = service.getProfessorByMatricula(matricula);
+        return listaProfessor.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(listaProfessores);
+                ResponseEntity.ok(listaProfessor);
     }
 
     @PostMapping

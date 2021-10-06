@@ -13,6 +13,7 @@ public class ProfessorDTO {
     private String curso;
     private Endereco endereco;
 
+
     public ProfessorDTO(Professor c) {
         this.id = c.getId();
         this.matricula = c.getMatricula();

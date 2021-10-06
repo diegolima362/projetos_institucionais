@@ -1,11 +1,11 @@
 package com.projetosAcademicos.domain.models;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "projeto")
 @NoArgsConstructor
@@ -20,22 +20,33 @@ public class Projeto {
     @Column(name = "titulo")
     private String titulo;
 
-    @Column(name = "area")
+    @Column(name = "area_projeto")
     private String area;
 
     @Column(name = "resumo")
     private String resumo;
 
-    @Column(name = "palavrachave1")
+    @Column(name = "palavra_chave_1")
     private String palavraChave1;
 
-    @Column(name = "palavrachave2")
+    @Column(name = "palavra_chave_2")
     private String palavraChave2;
 
-    @Column(name = "palavrachave3")
+    @Column(name = "palavra_chave_3")
     private String palavraChave3;
 
-    @Column(name = "url")
+    @Column(name = "url_documento")
     private String curso;
 
+    @ManyToOne
+    @JoinColumn(name="professor_id", nullable=false)
+    private Professor professor;
+
+    @ManyToMany
+    @JoinTable(
+            name = "alunos_projeto",
+            joinColumns = @JoinColumn(name = "projeto_id"),
+            inverseJoinColumns = @JoinColumn(name = "aluno_id")
+    )
+    Set<Aluno> alunos;
 }

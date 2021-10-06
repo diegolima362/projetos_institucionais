@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "professor")
 @NoArgsConstructor
@@ -33,5 +34,4 @@ public class Professor {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_endereco_id", foreignKey = @ForeignKey(name = "fk_endereco_professor"), referencedColumnName = "id")
     private Endereco endereco;
-
 }
