@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity(name = "projeto")
 @NoArgsConstructor
@@ -36,17 +36,17 @@ public class Projeto {
     private String palavraChave3;
 
     @Column(name = "url_documento")
-    private String curso;
+    private String urlDocumento;
 
     @ManyToOne
-    @JoinColumn(name="professor_id", nullable=false)
+    @JoinColumn(name = "professor_id", nullable = false)
     private Professor professor;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = "alunos_projeto",
             joinColumns = @JoinColumn(name = "projeto_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id")
     )
-    Set<Aluno> alunos;
+    private List<Aluno> alunos;
 }

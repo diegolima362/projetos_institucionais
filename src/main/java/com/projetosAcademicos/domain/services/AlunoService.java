@@ -20,6 +20,10 @@ public class AlunoService {
         return alunoRepository.findAll().stream().map(AlunoDTO::new).collect(Collectors.toList());
     }
 
+    public List<Aluno> getAlunosById(List<Long> ids) {
+        return alunoRepository.findAllById(ids);
+    }
+
     public Optional<Aluno> getAlunoById(Long id) {
         return alunoRepository.findById(id);
     }
@@ -50,11 +54,13 @@ public class AlunoService {
         }
     }
 
-    public void remover(Long id) {
+    public boolean remover(Long id) {
         Optional<Aluno> aluno = getAlunoById(id);
         if (aluno.isPresent()) {
             alunoRepository.deleteById(id);
+            return true;
         }
+        return false;
     }
 
 }

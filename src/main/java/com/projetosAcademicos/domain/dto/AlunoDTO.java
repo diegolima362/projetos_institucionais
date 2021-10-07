@@ -22,4 +22,12 @@ public class AlunoDTO {
         this.curso = c.getCurso();
         this.endereco = c.getEndereco();
     }
+
+    public Aluno toAluno(){
+        Aluno a = new Aluno();
+        return new Aluno(
+
+        );
+
+    }
 }

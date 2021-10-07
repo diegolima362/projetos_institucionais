@@ -41,7 +41,7 @@ public class ProjetoService {
             projetoDB.setTitulo(projeto.getTitulo());
             projetoDB.setArea(projeto.getArea());
             projetoDB.setResumo(projeto.getResumo());
-            projetoDB.setCurso(projeto.getCurso());
+            projetoDB.setUrlDocumento(projeto.getUrlDocumento());
 
 
             projetoDB.setPalavraChave1(projeto.getPalavraChave1());

@@ -5,7 +5,7 @@ import com.projetosAcademicos.domain.models.Professor;
 import com.projetosAcademicos.domain.models.Projeto;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class ProjetoDTO {
@@ -17,9 +17,16 @@ public class ProjetoDTO {
     private String palavraChave1;
     private String palavraChave2;
     private String palavraChave3;
-    private String curso;
+    private String urlDocumento;
+
+    private Long professorId;
+    private List<Long> alunosId;
+
     private Professor professor;
-    Set<Aluno> alunos;
+    List<Aluno> alunos;
+
+    public ProjetoDTO() {
+    }
 
     public ProjetoDTO(Projeto p) {
         this.id = p.getId();
@@ -29,8 +36,10 @@ public class ProjetoDTO {
         this.palavraChave1 = p.getPalavraChave1();
         this.palavraChave2 = p.getPalavraChave2();
         this.palavraChave3 = p.getPalavraChave3();
-        this.curso = p.getCurso();
+        this.urlDocumento = p.getUrlDocumento();
         this.professor = p.getProfessor();
         this.alunos = p.getAlunos();
     }
+
+
 }
