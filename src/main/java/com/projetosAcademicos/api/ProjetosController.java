@@ -1,7 +1,11 @@
 package com.projetosAcademicos.api;
 
 import com.projetosAcademicos.domain.dto.ProjetoDTO;
+import com.projetosAcademicos.domain.models.Aluno;
+import com.projetosAcademicos.domain.models.Professor;
 import com.projetosAcademicos.domain.models.Projeto;
+import com.projetosAcademicos.domain.services.AlunoService;
+import com.projetosAcademicos.domain.services.ProfessorService;
 import com.projetosAcademicos.domain.services.ProjetoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +13,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/projetos")
 public class ProjetosController {
     @Autowired
     private ProjetoService service;
+
+    @Autowired
+    private ProfessorService professorService;
+
+    @Autowired
+    private AlunoService alunoService;
 
     @GetMapping
     public ResponseEntity<List<ProjetoDTO>> get() {
@@ -35,10 +46,41 @@ public class ProjetosController {
                 ResponseEntity.ok(listaProjetos);
     }
 
+
     @PostMapping
-    public String cadastrarProjeto(@RequestBody Projeto projeto) {
-        Projeto c = service.cadastrar(projeto);
-        return "Projeto salvo com sucesso: " + c.getId();
+    public String cadastrarProjeto(@RequestBody ProjetoDTO projeto) {
+        Optional<Professor> professor = professorService.getProfessorById(projeto.getProfessorId());
+        List<Aluno> alunos = alunoService.getAlunosById(projeto.getAlunosId());
+
+        if (professor.isPresent() && !alunos.isEmpty()) {
+            Projeto p = new Projeto();
+            p.setTitulo(projeto.getTitulo());
+            p.setArea(projeto.getArea());
+            p.setResumo(projeto.getResumo());
+            p.setPalavraChave1(projeto.getPalavraChave1());
+            p.setPalavraChave2(projeto.getPalavraChave2());
+            p.setPalavraChave3(projeto.getPalavraChave3());
+            p.setAlunos(alunos);
+            p.setProfessor(professor.get());
+            p.setUrlDocumento(projeto.getUrlDocumento());
+
+            return "Projeto cadastrado com sucesso: " + service.cadastrar(p).getId();
+        }
+
+        return "Projeto não foi salvo!";
+    }
+
+    @PutMapping("/{id}/addAluno/{aluno_id}")
+    public String adicionarAluno(@PathVariable("id") Long id, @PathVariable("aluno_id") Long alunoId) {
+        Optional<Projeto> p = service.getProjetoById(id);
+        if (!p.isPresent()) return "Projeto não encontrado!";
+
+        Optional<Aluno> a = alunoService.getAlunoById(alunoId);
+        if (!a.isPresent()) return "Aluno não encontrado!";
+
+        p.get().getAlunos().add(a.get());
+        List<Long> ids = service.atualizar(p.get(), id).getAlunos().stream().map(Aluno::getId).collect(Collectors.toList());
+        return "Aluno adicionado ao projeto: " + ids;
     }
 
     @PutMapping("/{id}")

@@ -51,7 +51,6 @@ public class AlunosController {
 
     @DeleteMapping("/{id}")
     public String removerAluno(@PathVariable("id") Long id) {
-        service.remover(id);
-        return "Aluno removido com sucesso. ";
+        return service.remover(id) ? "Aluno removido com sucesso." : "Aluno não encontrado";
     }
 }
