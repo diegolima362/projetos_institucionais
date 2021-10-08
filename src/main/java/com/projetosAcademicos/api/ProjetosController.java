@@ -110,6 +110,30 @@ public class ProjetosController {
         return "Todos os alunos foram adicionados ao projeto";
     }
 
+    @PostMapping("/{id}/removeAluno/{aluno_id}")
+    public String removerAluno(@PathVariable("id") Long id, @PathVariable("aluno_id") Long alunoId ) {
+        Optional<Projeto> p = service.getProjetoById(id);
+        if (!p.isPresent()) return "Projeto não encontrado!";
+
+        Boolean removido = false;
+        for(int i = 0 ; i < p.get().getAlunos().size() ; i++) {
+            Aluno aluno = p.get().getAlunos().get(i);
+            if(aluno.getId() == alunoId ) {
+                p.get().getAlunos().remove(i);
+                removido = true;
+                break;
+            }
+        }
+
+        service.atualizar(p.get(), id);
+
+        if(!removido) {
+            return "Aluno não está no projeto";
+        }
+        
+        return "Aluno foi removido do projeto";
+    }
+
     @PutMapping("/{id}")
     public String atualizarProjeto(@PathVariable("id") Long id, @RequestBody Projeto projeto) {
         Projeto c = service.atualizar(projeto, id);
