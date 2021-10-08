@@ -85,40 +85,39 @@ public class ProjetosController {
     }
 
     @PostMapping("/{id}/addAluno")
-    public String adicionarAlunos(@PathVariable("id") Long id, @RequestBody AlunosDTO alunos ) {
+    public String adicionarAlunos(@PathVariable("id") Long id, @RequestBody AlunosDTO alunos) {
         Optional<Projeto> p = service.getProjetoById(id);
         if (!p.isPresent()) return "Projeto não encontrado!";
 
         StringBuffer erros = new StringBuffer("Os seguintes alunos não foram adicionados: ");
-        
-        for(int i = 0 ; i < alunos.getIds().size() ; i++) {
+
+        for (int i = 0; i < alunos.getIds().size(); i++) {
             Long alunoId = alunos.getIds().get(i);
             Optional<Aluno> a = alunoService.getAlunoById(alunoId);
             if (!a.isPresent()) {
                 erros.append(alunoId);
-            }
-            else {
+            } else {
                 p.get().getAlunos().add(a.get());
             }
         }
 
         service.atualizar(p.get(), id);
 
-        if(erros.length() != 0)
+        if (erros.length() != 0)
             return erros.toString();
-        
+
         return "Todos os alunos foram adicionados ao projeto";
     }
 
     @PostMapping("/{id}/removeAluno/{aluno_id}")
-    public String removerAluno(@PathVariable("id") Long id, @PathVariable("aluno_id") Long alunoId ) {
+    public String removerAluno(@PathVariable("id") Long id, @PathVariable("aluno_id") Long alunoId) {
         Optional<Projeto> p = service.getProjetoById(id);
         if (!p.isPresent()) return "Projeto não encontrado!";
 
         Boolean removido = false;
-        for(int i = 0 ; i < p.get().getAlunos().size() ; i++) {
+        for (int i = 0; i < p.get().getAlunos().size(); i++) {
             Aluno aluno = p.get().getAlunos().get(i);
-            if(aluno.getId() == alunoId ) {
+            if (aluno.getId().equals(alunoId)) {
                 p.get().getAlunos().remove(i);
                 removido = true;
                 break;
@@ -127,10 +126,10 @@ public class ProjetosController {
 
         service.atualizar(p.get(), id);
 
-        if(!removido) {
+        if (!removido) {
             return "Aluno não está no projeto";
         }
-        
+
         return "Aluno foi removido do projeto";
     }
 
@@ -141,17 +140,14 @@ public class ProjetosController {
     }
 
     @PutMapping("/{id}/professor/{professor_id}")
-    public String atualizarProfessorProjeto(@PathVariable("id") Long id,  @PathVariable("professor_id") Long professorId) {
+    public String atualizarProfessorProjeto(@PathVariable("id") Long id, @PathVariable("professor_id") Long professorId) {
         Projeto c = service.alterarProfessor(id, professorId);
         return "Projeto atualizado com sucesso: " + c.getId();
     }
-
-
 
     @DeleteMapping("/{id}")
     public String removerProjeto(@PathVariable("id") Long id) {
         service.remover(id);
         return "Projeto removido com sucesso. ";
     }
-
 }

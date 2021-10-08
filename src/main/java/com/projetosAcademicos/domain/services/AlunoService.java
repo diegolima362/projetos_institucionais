@@ -3,6 +3,7 @@ package com.projetosAcademicos.domain.services;
 import com.projetosAcademicos.domain.dto.AlunoDTO;
 import com.projetosAcademicos.domain.models.Aluno;
 import com.projetosAcademicos.domain.repositories.AlunoRepository;
+import com.projetosAcademicos.domain.repositories.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class AlunoService {
 
     @Autowired
     private AlunoRepository alunoRepository;
+
+    @Autowired
+    private EnderecoService enderecoService;
 
     public List<AlunoDTO> getAlunos() {
         return alunoRepository.findAll().stream().map(AlunoDTO::new).collect(Collectors.toList());
@@ -45,8 +49,9 @@ public class AlunoService {
             alunoBD.setNome(aluno.getNome());
             alunoBD.setCpf(aluno.getCpf());
             alunoBD.setCurso(aluno.getCurso());
-            alunoBD.setEndereco(aluno.getEndereco());
 
+            // Atualizar endereco
+            enderecoService.atualizarEnderecoAluno(aluno.getEndereco(), id);
             alunoRepository.save(alunoBD);
             return alunoBD;
         } else {

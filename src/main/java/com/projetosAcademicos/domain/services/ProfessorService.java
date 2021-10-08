@@ -16,6 +16,9 @@ public class ProfessorService {
     @Autowired
     private ProfessorRepository professorRepository;
 
+    @Autowired
+    EnderecoService enderecoService;
+
     public List<ProfessorDTO> getProfessores() {
         return professorRepository.findAll().stream().map(ProfessorDTO::new).collect(Collectors.toList());
     }
@@ -41,8 +44,9 @@ public class ProfessorService {
             professorDB.setNome(professor.getNome());
             professorDB.setCpf(professor.getCpf());
             professorDB.setCurso(professor.getCurso());
-            professorDB.setEndereco(professor.getEndereco());
 
+            // Atualizar endereco
+            enderecoService.atualizarEnderecoProfessor(professor.getEndereco(), id);
 
             professorRepository.save(professorDB);
             return professorDB;

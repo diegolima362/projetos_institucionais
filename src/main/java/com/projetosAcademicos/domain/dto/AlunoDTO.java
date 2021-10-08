@@ -23,11 +23,4 @@ public class AlunoDTO {
         this.endereco = c.getEndereco();
     }
 
-    public Aluno toAluno(){
-        Aluno a = new Aluno();
-        return new Aluno(
-
-        );
-
-    }
 }

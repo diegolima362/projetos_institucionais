@@ -49,14 +49,12 @@ public class ProjetoService {
             projetoDB.setResumo(projeto.getResumo());
             projetoDB.setUrlDocumento(projeto.getUrlDocumento());
 
-
             projetoDB.setPalavraChave1(projeto.getPalavraChave1());
             projetoDB.setPalavraChave2(projeto.getPalavraChave2());
             projetoDB.setPalavraChave3(projeto.getPalavraChave3());
 
             projetoDB.setProfessor(projeto.getProfessor());
             projetoDB.setAlunos(projeto.getAlunos());
-
 
             projetoRepository.save(projetoDB);
             return projetoDB;

@@ -132,4 +132,22 @@ create table alunos_projeto
 
 
 -- Gerar dados
-insert into alunos_projeto (aluno_id, projeto_id) value (4, 5);
+insert into alunos_projeto (aluno_id, projeto_id) value (5, 4);
+
+
+-- --------------------------------------------------------
+-- Autenticacao
+create table usuario
+(
+    id    int auto_increment,
+    login varchar(255) not null,
+    senha varchar(255) not null,
+    constraint usuario_pk
+        primary key (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+create unique index usuario_login_uindex
+    on usuario (login);
+
+
