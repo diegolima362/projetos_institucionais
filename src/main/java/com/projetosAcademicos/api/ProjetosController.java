@@ -116,6 +116,14 @@ public class ProjetosController {
         return "Projeto atualizado com sucesso: " + c.getId();
     }
 
+    @PutMapping("/{id}/professor/{professor_id}")
+    public String atualizarProfessorProjeto(@PathVariable("id") Long id,  @PathVariable("professor_id") Long professorId) {
+        Projeto c = service.alterarProfessor(id, professorId);
+        return "Projeto atualizado com sucesso: " + c.getId();
+    }
+
+
+
     @DeleteMapping("/{id}")
     public String removerProjeto(@PathVariable("id") Long id) {
         service.remover(id);
