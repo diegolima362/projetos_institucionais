@@ -1,5 +1,6 @@
 package com.projetosAcademicos.api;
 
+import com.projetosAcademicos.domain.dto.AlunosDTO;
 import com.projetosAcademicos.domain.dto.ProjetoDTO;
 import com.projetosAcademicos.domain.models.Aluno;
 import com.projetosAcademicos.domain.models.Professor;
@@ -81,6 +82,34 @@ public class ProjetosController {
         p.get().getAlunos().add(a.get());
         List<Long> ids = service.atualizar(p.get(), id).getAlunos().stream().map(Aluno::getId).collect(Collectors.toList());
         return "Aluno adicionado ao projeto: " + ids;
+    }
+
+    @PostMapping("/{id}/addAluno")
+    public String adicionarAlunos(@PathVariable("id") Long id, @RequestBody AlunosDTO alunos ) {
+        Optional<Projeto> p = service.getProjetoById(id);
+        if (!p.isPresent()) return "Projeto não encontrado!";
+
+        StringBuffer erros = new StringBuffer("Os seguintes alunos não foram adicionados: ");
+        
+        for(int i = 0 ; i < alunos.getIds().size() ; i++) {
+            Long alunoId = alunos.getIds().get(i);
+            Optional<Aluno> a = alunoService.getAlunoById(alunoId);
+            if (!a.isPresent()) {
+                erros.append(alunoId);
+                //System.out.println("erro foi :  " + alunoId.toString());
+                System.out.println(erros.toString());
+            }
+            else {
+                p.get().getAlunos().add(a.get());
+            }
+        }
+
+        service.atualizar(p.get(), id);
+
+        if(erros.length() != 0)
+            return erros.toString();
+        
+        return "Todos os alunos foram adicionados ao projeto";
     }
 
     @PutMapping("/{id}")
