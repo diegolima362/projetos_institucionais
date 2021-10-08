@@ -2,6 +2,7 @@ package com.projetosAcademicos.api;
 
 import com.projetosAcademicos.domain.models.Aluno;
 import com.projetosAcademicos.domain.models.Endereco;
+import com.projetosAcademicos.domain.models.Professor;
 import com.projetosAcademicos.domain.services.EnderecoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,16 @@ public class EnderecoController {
     @Autowired
     private EnderecoService service;
 
-    @PutMapping("/{id}")
-    public String atualizarEndereco(@PathVariable("id") Long id, @RequestBody Endereco endereco) {
-        Aluno a = service.atualizarEndereco(endereco, id);
+    @PutMapping("/aluno/{id}")
+    public String atualizarEnderecoAluno(@PathVariable("id") Long id, @RequestBody Endereco endereco) {
+        Aluno a = service.atualizarEnderecoAluno(endereco, id);
         return "Endereco do aluno atualizado com sucesso: " + a.getId();
+    }
+
+    @PutMapping("/professor/{id}")
+    public String atualizarEnderecoProfessor(@PathVariable("id") Long id, @RequestBody Endereco endereco) {
+        Professor p = service.atualizarEnderecoProfessor(endereco, id);
+        return "Endereco do professor atualizado com sucesso: " + p.getId();
     }
 
 }
