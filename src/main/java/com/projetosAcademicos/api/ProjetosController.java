@@ -96,8 +96,6 @@ public class ProjetosController {
             Optional<Aluno> a = alunoService.getAlunoById(alunoId);
             if (!a.isPresent()) {
                 erros.append(alunoId);
-                //System.out.println("erro foi :  " + alunoId.toString());
-                System.out.println(erros.toString());
             }
             else {
                 p.get().getAlunos().add(a.get());
